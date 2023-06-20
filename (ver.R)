@@ -1,0 +1,60 @@
+# R 언어 버전
+# 패키지 설치 및 로드
+install.packages('readxl')
+library(readxl)
+# 엑셀 파일 불러오기
+movie <- read.csv("C:/Study/Data/범죄3_리뷰_점수별_개수.csv", fileEncoding = "euc-kr")
+View(movie)
+
+# 데이터 레이블에서 원하는 항목만을 추출 
+movie_point <- movie[,c("X")] 
+movie_count <- movie[,c("개수")] 
+movie_point_count <- movie[,c("X", "개수")]
+movie_percentage <- movie[,c("비율")]
+View(movie_point_count)
+View(movie_point)
+View(movie_count)
+View(movie_percentage)
+
+# 막대그래프 데이터레이블 넣는 준비
+mv_count=movie_point_count$개수
+View(mv_count)
+mat_mv=matrix(mv_count, nrow = 10)
+
+
+# 막대그래프
+movie_bar = barplot(mv_count, beside=T, ylim=c(0, 400), col=rainbow(10), main="범죄도시3 리뷰 항목별 개수", xlab="리뷰 점수", ylab="단위 : 개", cex.main=1.5,cex.lab=1.5, cex.names = 0.8, width=4.5)
+text(x=movie_bar, y=mat_mv, labels = mat_mv, pos=3, col="black") # 데이터 레이블
+legend("topleft", legend=c(movie$X), fill=c(rainbow(10)), cex=1) # 범례
+
+# 파이차트
+movie_pie = pie(movie$개수, labels=paste(movie$X, movie$비율*100, "%", "\n"), cex=1.2, col=rainbow(10), main="범죄도시3 리뷰 점수별 비율")
+legend("bottomleft", legend=c(movie$X), fill=c(rainbow(10)), cex=1) # 범례
+
+# 엑셀 파일 불러오기
+movie2 <- read.csv("C:/Study/Data/범죄3 긍정_부정리뷰_개수.csv", fileEncoding = "euc-kr")
+View(movie2)
+
+# 데이터 레이블에서 원하는 항목만을 추출 
+movie2_point <- movie2[,c("X")] 
+movie2_count <- movie2[,c("개수")] 
+movie2_percentage <- movie2[,c("비율")] 
+movie2_point_count <- movie2[,c("X", "개수")]
+View(movie2_point_count)
+View(movie2_point)
+View(movie2_count)
+View(movie2_percentage)
+
+# 막대그래프 데이터레이블 넣는 준비
+mv_count2=movie2_point_count$개수
+View(mv_count2)
+mat_mv2=matrix(mv_count2, nrow = 10)
+
+# 막대그래프
+movie_bar2 = barplot(mv_count2, beside=T, ylim=c(0, 600), col=rainbow(2), main="범죄도시3 리뷰 긍정, 부정별 개수", xlab="긍정, 부정", ylab="단위 : 개", cex.main=1.5,cex.lab=1.5, cex.names = 0.8, width=4.5, space=2.0)
+text(x=movie_bar2, y=mat_mv2, labels = mat_mv2, pos=3, col="black") # 데이터 레이블
+legend("topright", legend=c(movie2$X), fill=c(rainbow(2)), cex=1.5) # 범례
+
+# 파이차트
+movie_pie2 = pie(movie2$개수, labels=paste(movie2$X, movie2$비율*100, "%", "\n"), cex=1.2, col=rainbow(2), main="범죄도시3 리뷰 긍정, 부정별 비율")
+legend("bottomleft", legend=c(movie2$X), fill=c(rainbow(2)), cex=1.5) # 범례
