@@ -1,0 +1,83 @@
+# Python 언어 버전
+# 패키지 로드 및 엑셀 파일 로드
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+plt.rcParams["font.family"] = "NanumGothic"
+movie= pd.read_csv('C:/Study/Data/범죄3_리뷰_점수별_개수.csv', encoding='euc-kr') 
+movie2 = pd.read_csv('C:/Study/Data/범죄3 긍정_부정리뷰_개수.csv', encoding='euc-kr') 
+movie
+
+movie2
+
+# 범죄도시3 리뷰 점수별 개수
+movie_point = movie.iloc[:10, :2] # slicing, 범죄도시 개수, 점수항목 분류
+movie_point
+
+# 범죄도시3 리뷰 긍정, 부정 개수
+movie2_point = movie2.iloc[:10, :2] # slicing, 범죄도시3 긍정, 부정 리뷰
+movie2_point
+
+# 범죄도시3 리뷰 항목별 개수 막대그래프
+import seaborn as sns
+      
+plt.figure(figsize=(30, 13)) # 크기
+colors = sns.color_palette('hls',len(movie_point)) # color 설정
+movie_bar = plt.bar(movie_point['Unnamed: 0'], movie_point['개수'], color=colors) # 막대그래프
+
+for rect in movie_bar: # 데이터레이블
+    height = rect.get_height()
+    plt.text(rect.get_x() + rect.get_width()/2.0, height, '%.2f' % height, ha='center',va='bottom', size = 20)
+
+
+plt.title('범죄도시3 리뷰 항목 별 개수', fontsize=25, pad=30) # title
+plt.xlabel('점수 단위',fontsize=25, labelpad=20) # x축 제목
+plt.ylabel('단위 : 개', fontsize=25, labelpad=20) # y축 제목
+plt.xticks(fontsize=20) # x축 레이블 글씨 사이즈
+job_list = movie_point
+plt.legend(handles=movie_bar,labels=list(job_list['Unnamed: 0']), loc='upper left', bbox_to_anchor=(1, 1), fontsize=17) # 범례
+movie_bar # 출력
+
+ 범죄도시3 리뷰 항목별 개수 파이차트
+import seaborn as sns
+      
+plt.figure(figsize=(10, 8)) # 크기
+colors = sns.color_palette('hls',len(movie_point)) # color 설정 0.0
+plt.title('범죄도시3 리뷰 점수별 비율', fontsize=15, pad=30) # title
+movie_pie = plt.pie(movie['비율'], colors=colors, labels=movie['Unnamed: 0'], 
+                    startangle=90, autopct='%1.1f%%', explode=(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1), shadow=True)
+
+plt.axis('equal')
+plt.legend(handles=movie_bar,labels=list(job_list['Unnamed: 0']), loc='upper left', bbox_to_anchor=(1, 1), fontsize=10) # 범례
+
+# 범죄도시3 긍정, 부정 리뷰 개수 막대그래프
+import seaborn as sns
+      
+plt.figure(figsize=(20, 13)) # 크기
+colors = sns.color_palette('hls',len(movie2_point)) # color 설정
+movie2_bar = plt.bar(movie2_point['Unnamed: 0'], movie2_point['개수'], color=colors, width=0.4) # 막대그래프
+
+for rect in movie2_bar: # 데이터레이블
+    height = rect.get_height()
+    plt.text(rect.get_x() + rect.get_width()/2.0, height, '%.2f' % height, ha='center',va='bottom', size = 20)
+
+
+plt.title('범죄도시3 긍정, 부정 별 개수', fontsize=25, pad=30) # title
+plt.xlabel('영화에 대한 리뷰',fontsize=25, labelpad=20) # x축 제목
+plt.ylabel('단위 : 개', fontsize=25, labelpad=20) # y축 제목
+plt.xticks(fontsize=20) # x축 레이블 글씨 사이즈
+job_list = movie2_point
+plt.legend(handles=movie2_bar,labels=list(job_list['Unnamed: 0']), loc='upper left', bbox_to_anchor=(1, 1), fontsize=17) # 범례
+movie2_bar # 출력
+
+# 범죄도시3 리뷰 항목별 개수 파이차트
+import seaborn as sns
+      
+plt.figure(figsize=(10, 8)) # 크기
+colors = sns.color_palette('hls',len(movie2_point)) # color 설정
+plt.title('범죄도시3 리뷰 긍정, 부정별 비율', fontsize=15, pad=30) # title
+movie2_pie = plt.pie(movie2['비율'], colors=colors, labels=movie2['Unnamed: 0'], 
+                    startangle=90, autopct='%1.1f%%', explode=(0.0, 0.1), shadow=True)
+
+plt.axis('equal')
+plt.legend(handles=movie2_bar,labels=list(job_list['Unnamed: 0']), loc='upper left', bbox_to_anchor=(1, 1), fontsize=10) # 범례
